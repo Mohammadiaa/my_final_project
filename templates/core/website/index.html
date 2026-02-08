@@ -1,4 +1,5 @@
-{% extends 'core/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
     
@@ -16,7 +17,7 @@
             <div class="row tm-row">
                 <article class="col-12 col-md-6 tm-post">
                     <hr class="tm-hr-primary">
-                    <a href="post.html" class="effect-lily tm-post-link tm-pt-60">
+                    <a href="{% url 'blog:single' 1 %}" class="effect-lily tm-post-link tm-pt-60">
                         <div class="tm-post-link-inner">
                             <img src="{% static 'img/img-01.jpg' %}" alt="Image" class="img-fluid">                            
                         </div>

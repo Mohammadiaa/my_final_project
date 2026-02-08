@@ -30,19 +30,19 @@ https://templatemo.com/tm-553-xtra-blog
             </div>
             <nav class="tm-nav" id="tm-nav">            
                 <ul>
-                    <li class="tm-nav-item"><a href="index.html" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'website:home' %}" class="tm-nav-link">
                         <i class="fas fa-home"></i>
                         Blog Home
                     </a></li>
-                    <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'blog:single' 1 %}" class="tm-nav-link">
                         <i class="fas fa-pen"></i>
                         Single Post
                     </a></li>
-                    <li class="tm-nav-item active"><a href="about.html" class="tm-nav-link">
+                    <li class="tm-nav-item active"><a href="{% url 'website:about' %}" class="tm-nav-link">
                         <i class="fas fa-users"></i>
                         About Xtra
                     </a></li>
-                    <li class="tm-nav-item"><a href="contact.html" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'website:contact' %}" class="tm-nav-link">
                         <i class="far fa-comments"></i>
                         Contact Us
                     </a></li>
@@ -90,6 +90,6 @@ https://templatemo.com/tm-553-xtra-blog
         
     </div>
      <script src="{% static 'js/jquery.min.js' %}"></script>
-     <script src="{% static 'js/templatemo-script.js %}"></script>
+     <script src="{% static 'js/templatemo-script.js' %}"></script>
 </body>
 </html>
