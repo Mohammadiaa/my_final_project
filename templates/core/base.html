@@ -43,25 +43,25 @@ https://templatemo.com/tm-553-xtra-blog
             </div>
             <nav class="tm-nav" id="tm-nav">
               <ul>
-                <li class="tm-nav-item">
+                <li class="tm-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
                   <a href="{% url 'website:home' %}" class="tm-nav-link">
                     <i class="fas fa-home"></i>
                     Blog Home
                   </a>
                 </li>
-                <li class="tm-nav-item">
-                  <a href="{% url 'blog:single' 1 %}" class="tm-nav-link">
+                <li class="tm-nav-item {% if request.resolver_match.url_name == 'single' %}active{% endif %}">
+                  <a href="#" class="tm-nav-link">
                     <i class="fas fa-pen"></i>
                     Single Post
                   </a>
                 </li>
-                <li class="tm-nav-item">
+                <li class="tm-nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
                   <a href="{% url 'website:about' %}" class="tm-nav-link">
                     <i class="fas fa-users"></i>
                     About Xtra
                   </a>
                 </li>
-                <li class="tm-nav-item">
+                <li class="tm-nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
                   <a href="{% url 'website:contact' %}" class="tm-nav-link">
                     <i class="far fa-comments"></i>
                     Contact Us
