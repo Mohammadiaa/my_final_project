@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+{% load blog_extras %}
 <!-- Search form -->
 <div class="row tm-row">
   <div class="col-12">
@@ -176,19 +177,27 @@
 
       <hr class="mb-3 tm-hr-primary" />
       <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
+
+      {% latest_posts as related_posts %}
       
-      {% comment %} <a href="#" class="d-block tm-mb-40">
+      {% for post in related_posts %}
+        <a href="{% url 'blog:single' post.pk %}" class="d-block tm-mb-40">
         <figure>
+          {% if post.image %}
           <img
-            src="{% static 'img/img-02.jpg' %}"
-            alt="Image"
+            src="{{ post.image.url }}"
+            alt="{{ post.title }}"
             class="mb-3 img-fluid"
           />
+          {% else %}
+          <img src="{% static 'img/default.jpg' %}" alt="default" class="mb-3 img-fluid" />
+          {% endif %}
           <figcaption class="tm-color-primary">
-            Duis mollis diam nec ex viverra scelerisque a sit
+            {{ post.title }}
           </figcaption>
         </figure>
-      </a> {% endcomment %}
+      </a> 
+    {% endfor %}
 
     </div>
   </aside>
