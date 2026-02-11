@@ -55,6 +55,7 @@ class Comment(models.Model):
     email = models.EmailField() 
     message = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name} on {self.post.title}"

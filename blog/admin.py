@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 # Register your models here.
 
 @admin.register(Category)
@@ -20,3 +20,17 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'published_date'
     filter_horizontal = ('categories', 'tags')
     ordering = ('-created_date',)
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'post', 'created_date')
+    list_filter = ('created_date',)
+    search_fields = ('name', 'email', 'message')
+    ordering = ('-created_date', 'approved') 
+    actions = ['approve_comments']
+
+
+    def approve_comments(self, request, queryset):
+        queryset.update(approved=True)
+    approve_comments.short_description = "Mark selected comments as approved"
+
