@@ -64,7 +64,10 @@
             {% if post.published_date  %}
                 {{ post.published_date|date:"F d, Y" }}
             {% endif %}
+            <br>
             posted by {{post.author.username}}
+            <br>
+            <span>{{ post.counted_view  }} views</span>
         </p>
         <p>
           {{ post.content|linebreaks }}
