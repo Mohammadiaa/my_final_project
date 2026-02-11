@@ -121,13 +121,13 @@
          {% csrf_token %}
           <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
           <div class="mb-4">
-            <input class="form-control" name="name" type="text" required />
+            <input class="form-control" name="name" type="text" placeholder="username"  required />
           </div>
           <div class="mb-4">
-            <input class="form-control" name="email" type="text" required />
+            <input class="form-control" name="email" type="text" placeholder="email" required />
           </div>
           <div class="mb-4">
-            <textarea class="form-control" name="message" rows="6" required></textarea>
+            <textarea class="form-control" name="message" rows="6" placeholder="message" required></textarea>
           </div>
           <div class="text-right">
             <button class="tm-btn tm-btn-primary tm-btn-small" type="submit" >Submit</button>
