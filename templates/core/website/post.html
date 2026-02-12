@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %} 
 {% load blog_extras %}
 
 <div class="row tm-row">
@@ -30,38 +30,31 @@
       class="img-fluid tm-mb-40"
     />
     {% endif %}
-
   </div>
 </div>
 
 <div class="row tm-row">
   <div class="col-lg-8 tm-post-col">
     <div class="tm-post-full">
-
-
       <div class="mb-4">
-        <h2 class="pt-2 tm-color-primary tm-post-title">
-          {{post.title}}
-        </h2>
+        <h2 class="pt-2 tm-color-primary tm-post-title">{{post.title}}</h2>
         <p class="tm-mb-40">
-            {% if post.published_date  %}
-                {{ post.published_date|date:"F d, Y" }}
-            {% endif %}
-            <br>
-            posted by {{post.author.username}}
-            <br>
-            <span>{{ post.counted_view  }} views</span>
+          {% if post.published_date %} {{ post.published_date|date:"F d, Y" }}
+          {% endif %}
+          <br />
+          posted by {{post.author.username}}
+          <br />
+          <span>{{ post.counted_view }} views</span>
         </p>
-        <p>
-          {{ post.content|linebreaks }}
-          
-        </p>
-        {% if post.categories.all %}
-          <span class="d-block text-right tm-color-primary">
-            {% for cat in post.categories.all %}
-              {{cat.name}}{% if not forloop.last %} . {% endif %}
-            {% endfor %}
-            </span>
+        <p>{{ post.content|linebreaks }}</p>
+
+        {% if post.tags.all %}
+        <span class="d-block text-right tm-color-primary">
+          {% for tag in post.tags.all %}
+          <a href="{% url 'blog:tag' tag.pk %}" class="tm-category-link">
+            {{ tag.name }} </a
+          >{% if not forloop.last %} . {% endif %} {% endfor %}
+        </span>
         {% endif %}
       </div>
 
@@ -70,10 +63,9 @@
         <h2 class="tm-color-primary tm-post-title">Comments</h2>
         <hr class="tm-hr-primary tm-mb-45" />
 
-        {% for comment in post.comments.all|approved_comments %}
+        {% for comment in approved_comments %}
         <div class="tm-comment tm-mb-45">
           <figure class="tm-comment-figure">
-
             <img
               src="{% static 'img/comment-1.jpg' %}"
               alt="Image"
@@ -84,9 +76,7 @@
             </figcaption>
           </figure>
           <div>
-            <p>
-               {{ comment.message }}
-            </p>
+            <p>{{ comment.message }}</p>
             <div class="d-flex justify-content-between">
               <span class="tm-color-primary">
                 {{ comment.created_date|date:"F d, Y H:i" }}
@@ -96,63 +86,70 @@
         </div>
 
         {% empty %}
-           <p>No comments yet. Be the first to comment!</p>
-        {% endfor %}  
-
+        <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
 
         <form action="" method="POST" class="mb-5 tm-comment-form">
-         {% csrf_token %}
+          {% csrf_token %}
           <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
           <div class="mb-4">
-            <input class="form-control" name="name" type="text" placeholder="username"  required />
+            <input
+              class="form-control"
+              name="name"
+              type="text"
+              placeholder="username"
+              required
+            />
           </div>
           <div class="mb-4">
-            <input class="form-control" name="email" type="text" placeholder="email" required />
+            <input
+              class="form-control"
+              name="email"
+              type="text"
+              placeholder="email"
+              required
+            />
           </div>
           <div class="mb-4">
-            <textarea class="form-control" name="message" rows="6" placeholder="message" required></textarea>
+            <textarea
+              class="form-control"
+              name="message"
+              rows="6"
+              placeholder="message"
+              required
+            ></textarea>
           </div>
           <div class="text-right">
-            <button class="tm-btn tm-btn-primary tm-btn-small" type="submit" >Submit</button>
+            <button class="tm-btn tm-btn-primary tm-btn-small" type="submit">
+              Submit
+            </button>
           </div>
         </form>
-
-
       </div>
     </div>
   </div>
 
-
   <aside class="col-lg-4 tm-aside-col">
     <div class="tm-post-sidebar">
-
       <hr class="mb-3 tm-hr-primary" />
       <h2 class="mb-4 tm-post-title tm-color-primary">Categories</h2>
       <ul class="tm-mb-75 pl-5 tm-category-list">
-
         {% for cat in post.categories.all %}
         <li>
-
-                <a href="{% url 'blog:category' cat.id %}">
-                  
-                  {{ cat.name }}
-
-                </a>{% if not forloop.last %}, {% endif %}
+          <a href="{% url 'blog:category' cat.id %}"> {{ cat.name }} </a>
+          {% if not forloop.last %}, {% endif %}
         </li>
         {% empty %}
-            <li>No category</li>
+        <li>No category</li>
         {% endfor %}
-
       </ul>
-
 
       <hr class="mb-3 tm-hr-primary" />
       <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
 
-      {% latest_posts as related_posts %}
-      
+      {% latest_posts as related_posts %} 
       {% for post in related_posts %}
-        <a href="{% url 'blog:single' post.pk %}" class="d-block tm-mb-40">
+      <a href="{% url 'blog:single' post.pk %}" class="d-block tm-mb-40">
         <figure>
           {% if post.image %}
           <img
@@ -161,15 +158,16 @@
             class="mb-3 img-fluid"
           />
           {% else %}
-          <img src="{% static 'img/default.jpg' %}" alt="default" class="mb-3 img-fluid" />
+          <img
+            src="{% static 'img/default.jpg' %}"
+            alt="default"
+            class="mb-3 img-fluid"
+          />
           {% endif %}
-          <figcaption class="tm-color-primary">
-            {{ post.title }}
-          </figcaption>
+          <figcaption class="tm-color-primary">{{ post.title }}</figcaption>
         </figure>
-      </a> 
-    {% endfor %}
-
+      </a>
+      {% endfor %}
     </div>
   </aside>
 </div>

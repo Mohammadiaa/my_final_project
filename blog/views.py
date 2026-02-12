@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Category
+from .models import Post, Category, Tag
 from .forms import CommentForm
 from django.utils import timezone
 from django.contrib import messages
@@ -26,6 +26,8 @@ def single_view(request, post_id):
 
     post.counted_view += 1
     post.save(update_fields=['counted_view'])
+
+    approved_comments = post.comments.filter(approved=True)
 
     return render(request, 'website/post.html', {
     'post': post,
@@ -59,7 +61,17 @@ def category_view(request, category_id):
 
 
     context = {
-        'results': posts, 
+        'posts': posts, 
         'query': category.name
+    }
+    return render(request, 'website/search.html', context)
+
+def tag_view(request, tag_id):
+    tag = get_object_or_404(Tag, pk=tag_id)
+    posts = Post.objects.filter(tags=tag, status=1)
+
+    context = {
+        'posts': posts,
+        'query': tag.name
     }
     return render(request, 'website/search.html', context)
