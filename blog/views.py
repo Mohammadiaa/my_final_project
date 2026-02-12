@@ -3,6 +3,7 @@ from .models import Post
 from .forms import CommentForm
 from django.utils import timezone
 from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 
 
@@ -29,3 +30,23 @@ def single_view(request, post_id):
     'post': post,
     'form': form
 })
+
+
+def search_view(request):
+    query = request.GET.get('q')
+    results = Post.objects.none()
+
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(categories__name__icontains=query) |
+            Q(tags__name__icontains=query),
+            status=1
+        ).distinct()
+    
+    context = {
+        'query':query,
+        'results': results
+    }
+    return render(request, 'website/search.html', context)

@@ -22,6 +22,7 @@ TemplateMo 553 Xtra Blog
 https://templatemo.com/tm-553-xtra-blog
 
 -->
+
   </head>
   <body>
     <div class="container-fluid">
@@ -74,6 +75,20 @@ https://templatemo.com/tm-553-xtra-blog
         </header>
 
         <main class="col-md-9 col-12 tm-main">
+
+          <!-- Search form -->
+            <div class="row tm-row">
+                <div class="col-12">
+                    <form method="GET" action="{% url 'blog:search' %}" class="form-inline tm-mb-80 tm-search-form">                
+                        <input class="form-control tm-search-input" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search..." aria-label="Search" required>
+                        <button class="tm-search-button" type="submit">
+                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+                        </button>                                
+                    </form>
+                </div>                
+            </div>  
+
+
           {% if messages %} {% for message in messages %}
           <div
             class="alert alert-{{ message.tags }} alert-dismissible fade show"

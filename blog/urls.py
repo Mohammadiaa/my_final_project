@@ -5,4 +5,5 @@ app_name = 'blog'
 
 urlpatterns = [
     path('<int:post_id>/', views.single_view, name='single'),
+    path('search/', views.search_view, name = 'search')
 ]
