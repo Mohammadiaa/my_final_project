@@ -1,91 +1,95 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-    
-     
+<div class="row tm-row">
+  {% for post in posts %}
+  <article class="col-12 col-md-6 tm-post">
+    <hr class="tm-hr-primary" />
 
-            <div class="row tm-row">
-            {% for post in posts %}
-                <article class="col-12 col-md-6 tm-post">
-                    <hr class="tm-hr-primary">
+    <a
+      href="{% url 'blog:single' post.pk %}"
+      class="effect-lily tm-post-link tm-pt-60"
+    >
+      <div class="tm-post-link-inner">
+        {% if post.image %}
+        <img src="{{post.image.url}}" alt="{{post.title}}" class="img-fluid" />
+        {% else %}
+        <img
+          src="{% static 'img/default.jpg' %}"
+          alt="default"
+          class="img-fluid"
+        />
+        {% endif %}
+      </div>
 
-                    <a href="{% url 'blog:single' post.pk %}" class="effect-lily tm-post-link tm-pt-60">
+      <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
+    </a>
 
-                        <div class="tm-post-link-inner">
-                            {% if post.image %}
-                            <img src="{{post.image.url}}" alt="{{post.title}}" class="img-fluid"> 
-                            {% else %}
-                            <img src="{% static 'img/default.jpg' %}" alt="default" class="img-fluid">
-                            {% endif %}                       
-                        </div>
+    <p class="tm-pt-30">{{post.content|truncatewords:25}}</p>
+    <div class="d-flex justify-content-between tm-pt-45">
 
-                        
-                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
-                    </a>    
+      <span class="tm-color-primary">
+        {% for cat in post.categories.all %}
+        <a href="{% url 'blog:category' cat.id %}" class="tm-category-link">
+          {{ cat.name }} </a>
+          {% if not forloop.last %} . {% endif %} {% endfor %}
+      </span>
 
-                    <p class="tm-pt-30">
-                        {{post.content|truncatewords:25}}
-                    </p>
-                    <div class="d-flex justify-content-between tm-pt-45">
-                        <span class="tm-color-primary">
-                            {% for cat in post.categories.all %}
-                              {{ cat.name }}{% if not forloop.last %} . {% endif %}
-                            {% endfor %}
-                        </span>
-                        <span class="tm-color-primary">
-                            {% if post.published_date %}
-                              {{ post.published_date|date:"F d, Y" }}
-                            {% endif %}
-                        </span>
-                    </div>
+      <span class="tm-color-primary">
+        {% if post.published_date %} {{ post.published_date|date:"F d, Y" }} 
+        {%endif %}
+      </span>
+    </div>
 
-                    <hr>
+    <hr />
 
-                    <div class="d-flex justify-content-between">
-                        <span>36 comments</span>
-                        <span>by {{ post.author.username }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>{{ post.counted_view }} views</span>
+    <div class="d-flex justify-content-between">
+      <span>36 comments</span>
+      <span>by {{ post.author.username }}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>{{ post.counted_view }} views</span>
+    </div>
+  </article>
 
-                    </div>
-                </article>
+  {% endfor %}
+</div>
 
-                {% endfor %}
-            </div>
+<div class="row tm-row tm-mt-100 tm-mb-75">
+  <div class="tm-prev-next-wrapper">
+    {% if posts.has_previous %}
+    <a
+      href="?page={{ posts.previous_page_number }}"
+      class="mb-2 tm-btn tm-btn-primary tm-prev-next tm-mr-20"
+      >Prev</a
+    >
+    {% endif %} {% if posts.has_next %}
+    <a
+      href="?page={{ posts.next_page_number }}"
+      class="mb-2 tm-btn tm-btn-primary tm-prev-next"
+      >Next</a
+    >
+    {% endif %}
+  </div>
 
-            <div class="row tm-row tm-mt-100 tm-mb-75">
-                <div class="tm-prev-next-wrapper">
-
-                    {% if posts.has_previous %}
-                        <a href="?page={{ posts.previous_page_number }}" class="mb-2 tm-btn tm-btn-primary tm-prev-next tm-mr-20">Prev</a>
-                    {% endif %}
-
-                    {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
-                    {% endif %}
-                </div>
-
-
-                <div class="tm-paging-wrapper">
-                    <span class="d-inline-block mr-3">Page</span>
-                    <nav class="tm-paging-nav d-inline-block">
-                        <ul>
-                            {% for num in posts.paginator.page_range %}
-                                {% if posts.number == num %}
-                            <li class="tm-paging-item active">
-                                <a href="?page={{ num }}" class="mb-2 tm-btn tm-paging-link">{{num}}</a>
-                            </li>
-                            {% else %}
-                            <li class="tm-paging-item">
-                                <a href="?page={{ num }}" class="mb-2 tm-btn tm-paging-link">{{num}}</a>
-                            </li>
-                                {% endif %}
-                            {% endfor %}
-                            
-                        </ul>
-                    </nav>
-                </div>                
-            </div>            
+  <div class="tm-paging-wrapper">
+    <span class="d-inline-block mr-3">Page</span>
+    <nav class="tm-paging-nav d-inline-block">
+      <ul>
+        {% for num in posts.paginator.page_range %} {% if posts.number == num %}
+        <li class="tm-paging-item active">
+          <a href="?page={{ num }}" class="mb-2 tm-btn tm-paging-link"
+            >{{num}}</a
+          >
+        </li>
+        {% else %}
+        <li class="tm-paging-item">
+          <a href="?page={{ num }}" class="mb-2 tm-btn tm-paging-link"
+            >{{num}}</a
+          >
+        </li>
+        {% endif %} {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</div>
 {% endblock %}

@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, Category
 from .forms import CommentForm
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Q
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -48,5 +49,17 @@ def search_view(request):
     context = {
         'query':query,
         'results': results
+    }
+    return render(request, 'website/search.html', context)
+
+
+def category_view(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    posts = Post.objects.filter(categories=category, status=1)
+
+
+    context = {
+        'results': posts, 
+        'query': category.name
     }
     return render(request, 'website/search.html', context)

@@ -133,9 +133,11 @@
         {% for cat in post.categories.all %}
         <li>
 
-            <a href="#" class="tm-color-primary">
-                {{cat.name}}
-            </a>
+                <a href="{% url 'blog:category' cat.id %}">
+                  
+                  {{ cat.name }}
+
+                </a>{% if not forloop.last %}, {% endif %}
         </li>
         {% empty %}
             <li>No category</li>
