@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, User
 from .forms import CommentForm
 from django.utils import timezone
 from django.contrib import messages
@@ -73,5 +73,16 @@ def tag_view(request, tag_id):
     context = {
         'posts': posts,
         'query': tag.name
+    }
+    return render(request, 'website/search.html', context)
+
+
+def author_view(request, author_id):
+    author = get_object_or_404(User, pk=author_id)
+    posts = Post.objects.filter(author=author, status=1)
+
+    context = {
+        'posts': posts,
+        'query': author.username
     }
     return render(request, 'website/search.html', context)

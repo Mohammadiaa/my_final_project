@@ -42,7 +42,7 @@
           {% if post.published_date %} {{ post.published_date|date:"F d, Y" }}
           {% endif %}
           <br />
-          posted by {{post.author.username}}
+          posted by <a href="{% url 'blog:author' post.author.pk %}">{{ post.author.username }}</a>
           <br />
           <span>{{ post.counted_view }} views</span>
         </p>

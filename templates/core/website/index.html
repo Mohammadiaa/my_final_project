@@ -42,7 +42,7 @@
 
     <div class="d-flex justify-content-between">
       <span>36 comments</span>
-      <span>by {{ post.author.username }}</span>
+      <span>by <a href="{% url 'blog:author' post.author.pk %}"> {{ post.author.username }}</span></a>
     </div>
     <div class="d-flex justify-content-between">
       <span>{{ post.counted_view }} views</span>
