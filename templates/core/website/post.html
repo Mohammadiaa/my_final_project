@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %} 
+{% extends 'base.html' %} 
+{% load static %} 
+{% load humanize %}
+{% block content %} 
 {% load blog_extras %}
 
 <div class="row tm-row">
@@ -39,7 +42,7 @@
       <div class="mb-4">
         <h2 class="pt-2 tm-color-primary tm-post-title">{{post.title}}</h2>
         <p class="tm-mb-40">
-          {% if post.published_date %} {{ post.published_date|date:"F d, Y" }}
+          {% if post.published_date %} {{ post.published_date|naturaltime  }}
           {% endif %}
           <br />
           posted by <a href="{% url 'blog:author' post.author.pk %}">{{ post.author.username }}</a>

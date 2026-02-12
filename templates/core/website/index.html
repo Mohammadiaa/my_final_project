@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
 {% load blog_extras %}
+{% load humanize %}
 {% load static %} 
 {% block content %}
 
@@ -36,7 +37,7 @@
       </span>
 
       <span class="tm-color-primary">
-        {% if post.published_date %} {{ post.published_date|date:"F d, Y" }}
+        {% if post.published_date %} {{ post.published_date|naturaltime  }}
         {%endif %}
       </span>
     </div>
