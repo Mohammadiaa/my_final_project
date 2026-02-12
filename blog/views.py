@@ -31,7 +31,9 @@ def single_view(request, post_id):
 
     return render(request, 'website/post.html', {
     'post': post,
-    'form': form
+    'form': form,
+    'approved_comments': approved_comments,
+    'approved_comments_count': approved_comments.count(),
 })
 
 

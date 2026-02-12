@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load blog_extras %}
+{% load static %} 
+{% block content %}
 
 <div class="row tm-row">
   {% for post in posts %}
@@ -41,7 +44,7 @@
     <hr />
 
     <div class="d-flex justify-content-between">
-      <span>36 comments</span>
+      <span>{{ post|approved_comments_count }} comments</span>
       <span>by <a href="{% url 'blog:author' post.author.pk %}"> {{ post.author.username }}</span></a>
     </div>
     <div class="d-flex justify-content-between">

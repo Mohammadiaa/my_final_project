@@ -13,3 +13,7 @@ def latest_posts(count=3):
 @register.filter
 def approved_comments(comments):
     return comments.filter(approved=True)
+
+@register.filter
+def approved_comments_count(post):
+    return post.comments.filter(approved=True).count()
