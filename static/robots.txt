@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /register/
+
+Sitemap: https://127.0.0.1:8000/sitemap.xml

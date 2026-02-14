@@ -20,11 +20,28 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
+from django.contrib.sitemaps.views import sitemap
+from blog.sitemaps import PostSitemap
+from django.http import HttpResponse
+
+
+sitemaps = {
+    'posts': PostSitemap,
+}
+
+def robots_txt(request):
+    with open(settings.BASE_DIR / 'static/robots.txt', 'r', encoding='utf-8') as f:
+        return HttpResponse(f.read(), content_type='text/plain')
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('website.urls')),
     path('blog/', include('blog.urls')),
+
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('robots.txt', robots_txt),
+
 ]
 
 if settings.DEBUG:

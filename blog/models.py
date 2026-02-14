@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone  
 from django import forms
+from django.urls import reverse
 
 # Create your models here.
 
@@ -49,6 +50,9 @@ class Post(models.Model):
     
     class Meta:
         ordering = ['-created_date']
+    
+    def get_absolute_url(self):
+        return reverse('blog:single', args=[self.pk])
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
