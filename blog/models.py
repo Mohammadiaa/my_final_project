@@ -44,6 +44,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+    is_private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

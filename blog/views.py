@@ -14,6 +14,10 @@ from .forms import LoginForm
 def single_view(request, post_id):
     post = get_object_or_404(Post, pk=post_id)  
 
+    if getattr(post, 'is_private', False) and not request.session.get('user_id'):
+        messages.warning(request, "You must be logged in to view this post.")  
+        return redirect('website:home')
+
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():

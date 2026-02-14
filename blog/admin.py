@@ -15,8 +15,8 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
-    list_display = ('id', 'title', 'author', 'status', 'counted_view', 'published_date', 'created_date')
-    list_filter = ('status', 'categories', 'tags', 'author')
+    list_display = ('id', 'title', 'author', 'status', 'counted_view', 'published_date', 'created_date', 'is_private')
+    list_filter = ('status', 'categories', 'tags', 'author', 'is_private')
     search_fields = ('title', 'content', 'author__username')
     date_hierarchy = 'published_date'
     filter_horizontal = ('categories', 'tags')
