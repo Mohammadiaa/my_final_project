@@ -1,5 +1,4 @@
-{% load static %}
-{% load humanize %}
+{% load static %} {% load humanize %}
 
 <!doctype html>
 <html lang="en">
@@ -23,7 +22,6 @@ TemplateMo 553 Xtra Blog
 https://templatemo.com/tm-553-xtra-blog
 
 -->
-
   </head>
   <body>
     <div class="container-fluid">
@@ -45,25 +43,33 @@ https://templatemo.com/tm-553-xtra-blog
             </div>
             <nav class="tm-nav" id="tm-nav">
               <ul>
-                <li class="tm-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <li
+                  class="tm-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                >
                   <a href="{% url 'website:home' %}" class="tm-nav-link">
                     <i class="fas fa-home"></i>
                     Blog Home
                   </a>
                 </li>
-                <li class="tm-nav-item {% if request.resolver_match.url_name == 'single' %}active{% endif %}">
+                <li
+                  class="tm-nav-item {% if request.resolver_match.url_name == 'single' %}active{% endif %}"
+                >
                   <a href="#" class="tm-nav-link">
                     <i class="fas fa-pen"></i>
                     Single Post
                   </a>
                 </li>
-                <li class="tm-nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                <li
+                  class="tm-nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                >
                   <a href="{% url 'website:about' %}" class="tm-nav-link">
                     <i class="fas fa-users"></i>
                     About Xtra
                   </a>
                 </li>
-                <li class="tm-nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                <li
+                  class="tm-nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
+                >
                   <a href="{% url 'website:contact' %}" class="tm-nav-link">
                     <i class="far fa-comments"></i>
                     Contact Us
@@ -71,33 +77,47 @@ https://templatemo.com/tm-553-xtra-blog
                 </li>
               </ul>
             </nav>
-
           </div>
         </header>
 
         <main class="col-md-9 col-12 tm-main">
-          <a href="{% url 'blog:register' %}" class="btn btn-primary">
-             Sign Up
-          </a>
-
-          {% comment %} <div class="text-center my-5">
-           <a href="{% url 'blog:login' %}" class="btn btn-primary btn-lg">
-            Login
-          </a>
-          </div> {% endcomment %}
+          
+          {% if request.session.username %}
+          <span>Logged in as {{ request.session.username }}</span>
+          <a href="{% url 'blog:logout' %}" class="btn btn-danger">Logout</a>
+          {% else %}
+          <a href="{% url 'blog:register' %}" class="btn btn-primary"
+            >Sign Up</a
+          >
+          <a href="{% url 'blog:login' %}" class="btn btn-secondary">Login</a>
+          {% endif %}
 
           <!-- Search form -->
-            <div class="row tm-row">
-                <div class="col-12">
-                    <form method="GET" action="{% url 'blog:search' %}" class="form-inline tm-mb-80 tm-search-form">                
-                        <input class="form-control tm-search-input" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search..." aria-label="Search" required>
-                        <button class="tm-search-button" type="submit">
-                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                        </button>                                
-                    </form>
-                </div>                
-            </div>  
-
+          <div class="row tm-row">
+            <div class="col-12">
+              <form
+                method="GET"
+                action="{% url 'blog:search' %}"
+                class="form-inline tm-mb-80 tm-search-form"
+              >
+                <input
+                  class="form-control tm-search-input"
+                  name="q"
+                  type="text"
+                  value="{{ request.GET.q }}"
+                  placeholder="Search..."
+                  aria-label="Search"
+                  required
+                />
+                <button class="tm-search-button" type="submit">
+                  <i
+                    class="fas fa-search tm-search-icon"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </form>
+            </div>
+          </div>
 
           {% if messages %} {% for message in messages %}
           <div

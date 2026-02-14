@@ -50,3 +50,32 @@ class RegisterForm(forms.ModelForm):
         if p1 != p2:
             raise forms.ValidationError("Passwords do not match!")
         return cleaned_data
+    
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label="Username",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        if username and password:
+            from .models import CustomUser
+            try:
+                user = CustomUser.objects.get(username=username)
+            except CustomUser.DoesNotExist:
+                raise forms.ValidationError("Invalid username or password!")
+
+            if not user.check_password(password):
+                raise forms.ValidationError("Invalid username or password!")
+
+            cleaned_data['user'] = user
+
+        return cleaned_data

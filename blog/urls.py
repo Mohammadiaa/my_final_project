@@ -13,6 +13,8 @@ urlpatterns = [
     path('tag/<int:tag_id>/', views.tag_view, name='tag'),
     path('author/<int:author_id>/', views.author_view, name='author'),
     path('register/', views.register_view, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
 
     path('rss/', LatestPostsFeed(), name='post_feed'),
 

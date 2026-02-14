@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from .forms import RegisterForm
 from .models import CustomUser
+from .forms import LoginForm
 # Create your views here.
 
 
@@ -103,7 +104,30 @@ def register_view(request):
             return redirect('blog:login')
         else:
             messages.error(request, "There was an error with your registration. Please check the details.")
-            
+
     else:
         form = RegisterForm()
     return render(request, 'website/register.html', {'form': form})
+
+#login 
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            request.session['user_id'] = user.id
+            request.session['username'] = user.username
+            messages.success(request, f"Welcome back, {user.username}!")
+            return redirect('website:home') 
+        else:
+            messages.error(request, "Invalid username or password!")
+    else:
+        form = LoginForm()
+        list(messages.get_messages(request))
+    return render(request, 'website/login.html' , {'form': form})
+
+#logout
+def logout_view(request):
+    request.session.flush() 
+    messages.success(request, "You have successfully logged out.")
+    return redirect('website:home')

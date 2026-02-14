@@ -1,0 +1,15 @@
+<h2>Login</h2>
+
+{% comment %} {% if messages %}
+  <div>
+    {% for message in messages %}
+      <p class="alert {{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %} {% endcomment %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
