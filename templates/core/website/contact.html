@@ -1,6 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
-
 <div class="row tm-row tm-mb-45">
   <div class="col-12">
     <hr class="tm-hr-primary tm-mb-55" />
@@ -98,6 +97,13 @@
         </div>
       </div>
       <div class="form-group row text-right">
+        <div class="form-group row mb-4">
+          <label class="col-sm-3 col-form-label text-right tm-color-primary"
+            >Captcha</label
+          >
+          <div class="col-sm-9">{{ form.captcha }}</div>
+        </div>
+
         <div class="col-12">
           <button class="tm-btn tm-btn-primary tm-btn-small" type="submit">
             Submit
@@ -106,6 +112,6 @@
       </div>
     </form>
 
-
-  {% endblock %}
+    {% endblock %}
+  </div>
 </div>

@@ -40,7 +40,8 @@ urlpatterns = [
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robots.txt', robots_txt),
-     path('summernote/', include('django_summernote.urls')),
+    path('summernote/', include('django_summernote.urls')),
+    path('captcha/', include('captcha.urls')),
 
 ]
 

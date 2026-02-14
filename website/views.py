@@ -4,6 +4,7 @@ from website.models import Contact
 from django.utils import timezone
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from blog.forms import ContactForm
 
 def home_view(request):
     posts = Post.objects.filter(status = 1, published_date__lte=timezone.now()).order_by("-published_date")
@@ -27,21 +28,15 @@ def about_view(request):
 
 def contact_view(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
-
-        if name and email and subject and message:
-            Contact.objects.create(
-                name=name,
-                email=email,
-                subject=subject,
-                message=message
-            )
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
             messages.success(request, "Your message has been sent successfully!")
             return redirect('website:contact')
         else:
-            messages.error(request, "Please fill in all fields.")
-
-    return render(request, 'website/contact.html')
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = ContactForm()
+    
+    return render(request, 'website/contact.html', {'form': form})
+       
