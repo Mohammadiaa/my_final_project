@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator
+from .forms import RegisterForm
+from .models import CustomUser
 # Create your views here.
 
 
@@ -88,3 +90,20 @@ def author_view(request, author_id):
         'query': author.username
     }
     return render(request, 'website/search.html', context)
+
+#sign up
+def register_view(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1']) 
+            user.save()
+            messages.success(request, "Registration successful! You can now log in.")
+            return redirect('blog:login')
+        else:
+            messages.error(request, "There was an error with your registration. Please check the details.")
+            
+    else:
+        form = RegisterForm()
+    return render(request, 'website/register.html', {'form': form})

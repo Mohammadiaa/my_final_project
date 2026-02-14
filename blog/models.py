@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone  
 from django import forms
 from django.urls import reverse
-
+import hashlib
 # Create your models here.
 
 
@@ -65,4 +65,17 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.name} on {self.post.title}"
     
+class CustomUser(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=128)
+    created_at = models.DateTimeField(default=timezone.now)
 
+    def set_password(self, raw_password):
+        self.password = hashlib.sha256(raw_password.encode()).hexdigest()
+    
+    def check_password(self, raw_password):
+        return self.password == hashlib.sha256(raw_password.encode()).hexdigest()
+    
+    def __str__(self):
+        return self.username
