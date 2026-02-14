@@ -49,7 +49,7 @@
           <br />
           <span>{{ post.counted_view }} views</span>
         </p>
-        <p>{{ post.content|linebreaks }}</p>
+        <p>{{ post.content|safe }}</p>
 
         {% if post.tags.all %}
         <span class="d-block text-right tm-color-primary">

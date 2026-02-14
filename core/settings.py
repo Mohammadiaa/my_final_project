@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'debug_toolbar',
     'taggit',
+    'django_summernote',
 ]
 
 SITE_ID = 1
@@ -55,6 +56,27 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    'width': '1000',
+    'height': '600',
+    'lang': 'fa-IR',
+    'toolbar': [
+        ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph', 'height']],
+        ['insert', ['link', 'picture', 'video', 'table', 'hr']],
+        ['misc', ['fullscreen', 'codeview', 'help']],
+    ],
+    'codemirror': {
+        'theme': 'monokai',
+        'mode': 'htmlmixed',
+        'lineNumbers': True,
+    },
+    'disable_resize_editor': False,
+}
 
 
 MIDDLEWARE = [
