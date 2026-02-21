@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip cache purge && \
+    pip install --no-cache-dir -r requirements.txt
+
 
 COPY . /app
 

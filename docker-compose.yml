@@ -1,4 +1,3 @@
-version: "3.8"
 
 services:
   backend:
@@ -34,3 +33,5 @@ services:
     ports:
       - ${PORT_DB}:${PORT_DB}
     
+volumes:
+  postgres_data:
